@@ -17,5 +17,5 @@ public interface LoginTicketDAO {
     LoginTicket selectByTicket(String ticket);
 
     @Update({"update ", TABLE_NAME, " set status=#{status} where ticket=#{ticket}"})
-    void updateStatus(@Param("ticket") String ticket, @Param("status") int status);//用户登出时把ticket的状态改掉
+    void updateStatus(@Param("ticket") String ticket, @Param("status") int status);
 }
