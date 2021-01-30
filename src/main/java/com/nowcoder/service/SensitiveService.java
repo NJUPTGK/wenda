@@ -38,6 +38,9 @@ public class SensitiveService implements InitializingBean {
         TrieNode tempNode = rootNode;
         for(int i=0;i<lineTxt.length();i++){
             Character c = lineTxt.charAt(i);
+            if(isSymbol(c)){
+                continue;
+            }
             TrieNode node = tempNode.getSubNode(c);
             if(node==null){
                 node = new TrieNode();
