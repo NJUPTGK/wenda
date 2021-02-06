@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * Created by nowcoder on 2016/7/2.
+ */
 @Service
 public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
@@ -25,6 +28,7 @@ public class UserService {
     public User selectByName(String name) {
         return userDAO.selectByName(name);
     }
+
     public Map<String, Object> register(String username, String password) {
         Map<String, Object> map = new HashMap<String, Object>();
         if (StringUtils.isBlank(username)) {
@@ -86,6 +90,7 @@ public class UserService {
 
         String ticket = addLoginTicket(user.getId());
         map.put("ticket", ticket);
+        map.put("userId", user.getId());
         return map;
     }
 
