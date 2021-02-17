@@ -1,5 +1,8 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.model.Comment;
 import com.nowcoder.model.EntityType;
 import com.nowcoder.model.HostHolder;
@@ -16,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 
-/**
- * Created by nowcoder on 2016/7/24.
- */
+
 @Controller
 public class CommentController {
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
@@ -30,6 +31,9 @@ public class CommentController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    EventProducer eventProducer;
 
 
     @RequestMapping(path = {"/addComment"}, method = {RequestMethod.POST})
@@ -51,6 +55,9 @@ public class CommentController {
 
             int count = commentService.getCommentCount(comment.getEntityId(), comment.getEntityType());
             questionService.updateCommentCount(comment.getEntityId(), count);
+
+            eventProducer.fireEvent(new EventModel(EventType.COMMENT).setActorId(comment.getUserId())
+                    .setEntityId(questionId));
 
         } catch (Exception e) {
             logger.error("增加评论失败" + e.getMessage());

@@ -8,9 +8,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
-/**
- * Created by nowcoder on 2016/7/24.
- */
+
 @Service
 public class CommentService {
     @Autowired
@@ -31,6 +29,10 @@ public class CommentService {
 
     public int getCommentCount(int entityId, int entityType) {
         return commentDAO.getCommentCount(entityId, entityType);
+    }
+
+    public int getUserCommentCount(int userId) {
+        return commentDAO.getUserCommentCount(userId);
     }
 
     public boolean deleteComment(int commentId) {
